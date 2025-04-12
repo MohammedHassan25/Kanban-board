@@ -12,7 +12,7 @@ import clsx from "clsx";
 
 export function CustomDropdownMenu({ triggerComponent, items }) {
   return (
-    <DropdownMenu.Root>
+    <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger asChild>
         {triggerComponent && triggerComponent()}
       </DropdownMenu.Trigger>
