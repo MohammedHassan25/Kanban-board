@@ -1,4 +1,9 @@
-import { Button, CustomDropdownMenu, TextField } from "./components";
+import {
+  Button,
+  CustomDropdownMenu,
+  TextField,
+  CustomDialog,
+} from "./components";
 
 function App() {
   return (
@@ -29,6 +34,28 @@ function App() {
           </Button>
         )}
       />
+      <CustomDialog
+        title="Edit Board"
+        triggerComponent={<button>ttttt</button>}
+      >
+        <TextField
+          placeholder={"text"}
+          required
+          isInvalid={false}
+          label="Edit Board"
+        />
+        <div className="flex justify-end">
+          <Button
+            onClick={() => {
+            }}
+            variant="primary"
+            size="lg"
+            isFullWidth={false}
+          >
+            Save
+          </Button>
+        </div>
+      </CustomDialog>
     </div>
   );
 }
