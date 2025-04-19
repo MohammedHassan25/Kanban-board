@@ -24,8 +24,6 @@ export function SideMenu() {
       <p className="px-8 py-4 text-heading-s">ALL BOARDS ({Data.length})</p>
       <ul>
         {Data.map((item, index) => (
-
-          
           <li
             key={item.id}
             className={clsx(
@@ -47,9 +45,9 @@ export function SideMenu() {
             isOpen={open}
             setOpen={setOpen}
             triggerComponent={
-                <button className="flex w-full items-center gap-4 text-heading-m text-main-purple">
+              <button className="flex w-full items-center gap-4 text-heading-m text-main-purple">
                 <img src={iconBoard} alt="icon-board" /> + Create New Board
-                </button>
+              </button>
             }
           >
             <div className="flex flex-col gap-4">
