@@ -1,4 +1,4 @@
-import { Header, SideMenu } from "./layouts";
+import { Header, SideMenu, TaskBoard } from "./layouts";
 
 function App() {
   return (
@@ -6,6 +6,7 @@ function App() {
       <Header />
       <div className="flex flex-1">
         <SideMenu />
+        <TaskBoard />
       </div>
     </div>
   );

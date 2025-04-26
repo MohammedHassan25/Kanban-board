@@ -12,7 +12,7 @@
 - [ ] Create the project's layout
   - [x] Header
   - [x] Sidebar
-  - [ ] Workspace
+  - [x] Workspace
   - [ ] Boards
   - [ ] Columns
   - [ ] Tasks
