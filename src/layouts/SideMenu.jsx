@@ -3,29 +3,17 @@ import clsx from "clsx";
 import { useState } from "react";
 import iconBoard from "@assets/icon-board.svg";
 
-const Data = [
-  { id: 1, title: "Home" },
-  { id: 2, title: "About" },
-  { id: 3, title: "Contact" },
-  { id: 4, title: "Services" },
-  { id: 5, title: "Blog" },
-  { id: 6, title: "Portfolio" },
-  { id: 7, title: "Testimonials" },
-  { id: 8, title: "FAQ" },
-  { id: 9, title: "Privacy Policy" },
-  { id: 10, title: "Terms of Service" },
-];
-
-export function SideMenu() {
-  const [select, setSelect] = useState(0);
+export function SideMenu(props) {
+  const { data , select , setSelect } = props;
+  
   const [open, setOpen] = useState(false);
   return (
     <aside className="-mt-px w-[300px] border-r border-lines-light bg-white">
-      <p className="px-8 py-4 text-heading-s">ALL BOARDS ({Data.length})</p>
+      <p className="px-8 py-4 text-heading-s">ALL BOARDS ({data.length})</p>
       <ul>
-        {Data.map((item, index) => (
+        {data.map((item, index) => (
           <li
-            key={item.id}
+            key={data[index].id}
             className={clsx(
               "flex w-11/12 cursor-pointer items-center gap-4 rounded-e-full px-8 py-4 text-heading-m text-medium-grey transition data-[isactive=false]:hover:bg-main-purple/10 data-[isactive=false]:hover:text-main-purple",
               {

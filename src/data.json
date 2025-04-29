@@ -1,0 +1,115 @@
+[
+  {
+    "id": 1,
+    "title": "board1",
+    "columns": [
+      {
+        "id": 1,
+        "title": "TODO",
+        "tasks": [
+          {
+            "id": 1,
+            "title": "card1",
+            "description": "card1 description"
+          },
+          {
+            "id": 2,
+            "title": "card2",
+            "description": "card2 description"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "IN PROGRESS",
+        "tasks": [
+          {
+            "id": 3,
+            "title": "card3",
+            "description": "card3 description"
+          },
+          {
+            "id": 4,
+            "title": "card4",
+            "description": "card4 description"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "DONE",
+        "tasks": [
+          {
+            "id": 6,
+            "title": "card6",
+            "description": "card6 description"
+          },
+          {
+            "id": 7,
+            "title": "card7",
+            "description": "card7 description"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "board2",
+    "columns": [
+      {
+        "id": 1,
+        "title": "TODO",
+        "tasks": [
+          {
+            "id": 1,
+            "title": "card11",
+            "description": "card1 description"
+          },
+          {
+            "id": 2,
+            "title": "card22",
+            "description": "card2 description"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "IN PROGRESS",
+        "tasks": [
+          {
+            "id": 3,
+            "title": "card33",
+            "description": "card3 description"
+          },
+          {
+            "id": 4,
+            "title": "card44",
+            "description": "card4 description"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "DONE",
+        "tasks": [
+          {
+            "id": 6,
+            "title": "card66",
+            "description": "card6 description"
+          },
+          {
+            "id": 7,
+            "title": "card77",
+            "description": "card7 description"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "board3",
+    "columns": []
+  }
+]
