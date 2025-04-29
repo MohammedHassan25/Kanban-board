@@ -2,6 +2,14 @@ import { CustomDialog, CustomDropdownMenu } from "@/components";
 import iconVerticalEllipsis from "@assets/icon-vertical-ellipsis.svg";
 import { useState } from "react";
 
+/**
+ * @param {Object} props - The props object.
+ * @param {Array} props.data - The data array containing board information.
+ * @param {number} props.select - The index of the selected board.
+ * @returns {JSX.Element} The Header component.
+ * @description The Header component renders the header of the application with a title and a dropdown menu for board actions.
+ */
+
 export function Header() {
   const [open, setOpen] = useState(false);
 

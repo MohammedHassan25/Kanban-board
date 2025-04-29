@@ -3,9 +3,18 @@ import clsx from "clsx";
 import { useState } from "react";
 import iconBoard from "@assets/icon-board.svg";
 
+/**
+ * @param {Object} props - The props object.
+ * @param {Array} props.data - The data array containing board information.
+ * @param {number} props.select - The index of the selected board.
+ * @param {Function} props.setSelect - The function to set the selected board index.
+ * @returns {JSX.Element} The SideMenu component.
+ * @description The SideMenu component renders a side menu with a list of boards and a button to create a new board.
+ */
+
 export function SideMenu(props) {
-  const { data , select , setSelect } = props;
-  
+  const { data, select, setSelect } = props;
+
   const [open, setOpen] = useState(false);
   return (
     <aside className="-mt-px w-[300px] border-r border-lines-light bg-white">

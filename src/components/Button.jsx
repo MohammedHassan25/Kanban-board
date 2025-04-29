@@ -1,5 +1,17 @@
 import { cva } from "class-variance-authority";
 
+/**
+ * @typedef {Object} ButtonProps
+ * @property {React.ReactNode} children - The content of the button.
+ * @property {string} [variant] - The variant of the button.
+ * @property {string} [size] - The size of the button.
+ * @property {boolean} [isFullWidth] - Whether the button should be full width.
+ * @property {boolean} [isDisabled] - Whether the button is disabled.
+ * @property {React.ButtonHTMLAttributes<HTMLButtonElement>} [props] - Additional button props.
+ * @returns {JSX.Element} The Button component.
+ * @description The Button component renders a button with different styles based on the variant and size props.
+ */
+
 const button = cva(["rounded-full px-6 duration-200 text-[13px] font-bold"], {
   variants: {
     variant: {
