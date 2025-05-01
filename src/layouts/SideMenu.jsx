@@ -1,6 +1,7 @@
-import { CustomDialog } from "@/components";
+import { CreateBoard, CustomDialog } from "@/components";
 import clsx from "clsx";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Context } from "@/ContextApp";
 import iconBoard from "@assets/icon-board.svg";
 
 /**
@@ -12,10 +13,11 @@ import iconBoard from "@assets/icon-board.svg";
  * @description The SideMenu component renders a side menu with a list of boards and a button to create a new board.
  */
 
-export function SideMenu(props) {
-  const { data, select, setSelect } = props;
-
+export function SideMenu() {
   const [open, setOpen] = useState(false);
+
+  const { data, select, setSelect } = useContext(Context);
+
   return (
     <aside className="-mt-px w-[300px] border-r border-lines-light bg-white">
       <p className="px-8 py-4 text-heading-s">ALL BOARDS ({data.length})</p>
@@ -47,23 +49,7 @@ export function SideMenu(props) {
               </button>
             }
           >
-            <div className="flex flex-col gap-4">
-              <label htmlFor="board-name" className="text-heading-m">
-                Board Name
-              </label>
-              <input
-                type="text"
-                id="board-name"
-                className="rounded-md border border-lines-light p-2"
-                placeholder="Enter board name"
-              />
-              <button className="rounded-md bg-main-purple px-4 py-2 text-white">
-                Create Board
-              </button>
-            </div>
-            <p className="text-sm mt-4 text-medium-grey">
-              This board will be created with the default settings.
-            </p>
+            <CreateBoard/>
           </CustomDialog>
         </li>
       </ul>

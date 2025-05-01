@@ -13,10 +13,10 @@
   - [x] Header
   - [x] Sidebar
   - [x] Workspace
-  - [ ] Boards
-  - [ ] Columns
-  - [ ] Tasks
-  - [ ] Mock data and use it to render the boards
+  - [x] Boards
+  - [x] Columns
+  - [x] Tasks
+  - [x] Mock data and use it to render the boards
 - Project's functionality
   - [ ] Add new board
   - [ ] Delete board
