@@ -4,8 +4,7 @@ import iconCross from "@assets/icon-cross.svg";
 import { useContext, useState } from "react";
 
 export function CreateBoard({ setOpen }) {
-  const { data, setData, select, setSelect } = useContext(Context);
-  console.log(data, select);
+  const { data, setData, setSelect } = useContext(Context);
   const [addColumn, setAddColumns] = useState([{ id: Date.now() }]);
   const addNewColumnHandler = () => {
     setAddColumns((prev) => [

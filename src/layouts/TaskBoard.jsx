@@ -13,7 +13,6 @@ import { useContext } from "react";
 export function TaskBoard() {
   const { data, select } = useContext(Context);
   const board = data[select]?.columns;
-  console.log(board, select);
 
   return (
     <main className="flex h-[calc(100vh-97px)] flex-1 gap-6 overflow-auto bg-light-grey p-6">
