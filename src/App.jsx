@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Header, SideMenu, TaskBoard } from "./layouts";
-import dataTask from "./data.json";
 import { Context } from "./ContextApp";
 
 function App() {
-  const [data, setData] = useState(dataTask || []);
+  const [data, setData] = useState([]);
   const [select, setSelect] = useState(0);
   return (
     <Context.Provider value={{ data, setData, select, setSelect }}>

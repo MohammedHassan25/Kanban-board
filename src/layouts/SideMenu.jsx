@@ -20,9 +20,9 @@ export function SideMenu() {
 
   return (
     <aside className="-mt-px w-[300px] border-r border-lines-light bg-white">
-      <p className="px-8 py-4 text-heading-s">ALL BOARDS ({data.length})</p>
+      <p className="px-8 py-4 text-heading-s">ALL BOARDS ({data?.length})</p>
       <ul>
-        {data.map((item, index) => (
+        {data?.map((item, index) => (
           <li
             key={data[index].id}
             className={clsx(
@@ -51,7 +51,7 @@ export function SideMenu() {
             }
             description="You can create a new board here."
           >
-            <CreateBoard/>
+            <CreateBoard setOpen={setOpen}/>
           </CustomDialog>
         </li>
       </ul>

@@ -1,8 +1,11 @@
 import { Button, TextField } from "@/components";
+import { Context } from "@/ContextApp";
 import iconCross from "@assets/icon-cross.svg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-export function CreateBoard() {
+export function CreateBoard({ setOpen }) {
+  const { data, setData, select, setSelect } = useContext(Context);
+  console.log(data, select);
   const [addColumn, setAddColumns] = useState([{ id: Date.now() }]);
   const addNewColumnHandler = () => {
     setAddColumns((prev) => [
@@ -15,8 +18,26 @@ export function CreateBoard() {
   const removeColumnHandler = (id) => {
     setAddColumns((cols) => cols.filter((item) => item.id !== id));
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const boardName = formData.get("BoardName");
+    const columnNames = formData.getAll("ColumnName").filter(Boolean);
+    const newBoard = {
+      id: data.length + 1,
+      title: boardName,
+      columns: columnNames.map((name, i) => ({
+        id: i + 1,
+        title: name,
+        tasks: [],
+      })),
+    };
+    setData((prev) => [...prev, newBoard]);
+    setSelect(data.length);
+    setOpen(false);
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div>
         <h3 className="pb-2 pt-6 text-body-m text-medium-grey">Name</h3>
         <TextField placeholder="Board Name" name="BoardName" required />
@@ -41,7 +62,12 @@ export function CreateBoard() {
         </Button>
       </div>
       <div className="mt-6">
-        <Button type="submit" variant="primary" size="sm" isFullWidth>
+        <Button
+          type="submit"
+          variant="primary"
+          size="sm"
+          isFullWidth
+        >
           Create New Board
         </Button>
       </div>
