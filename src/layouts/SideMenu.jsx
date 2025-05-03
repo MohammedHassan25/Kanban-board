@@ -43,11 +43,13 @@ export function SideMenu() {
           <CustomDialog
             isOpen={open}
             setOpen={setOpen}
+            title="Add New Board"
             triggerComponent={
               <button className="flex w-full items-center gap-4 text-heading-m text-main-purple">
                 <img src={iconBoard} alt="icon-board" /> + Create New Board
               </button>
             }
+            description="You can create a new board here."
           >
             <CreateBoard/>
           </CustomDialog>
