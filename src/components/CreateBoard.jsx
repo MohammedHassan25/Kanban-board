@@ -61,12 +61,7 @@ export function CreateBoard({ setOpen }) {
         </Button>
       </div>
       <div className="mt-6">
-        <Button
-          type="submit"
-          variant="primary"
-          size="sm"
-          isFullWidth
-        >
+        <Button type="submit" variant="primary" size="sm" isFullWidth>
           Create New Board
         </Button>
       </div>

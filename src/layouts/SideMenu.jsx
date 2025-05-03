@@ -25,6 +25,7 @@ export function SideMenu() {
         {data?.map((item, index) => (
           <li
             key={data[index].id}
+            tabIndex={0}
             className={clsx(
               "flex w-11/12 cursor-pointer items-center gap-4 rounded-e-full px-8 py-4 text-heading-m text-medium-grey transition data-[isactive=false]:hover:bg-main-purple/10 data-[isactive=false]:hover:text-main-purple",
               {
@@ -51,7 +52,7 @@ export function SideMenu() {
             }
             description="You can create a new board here."
           >
-            <CreateBoard setOpen={setOpen}/>
+            <CreateBoard setOpen={setOpen} />
           </CustomDialog>
         </li>
       </ul>
