@@ -31,8 +31,8 @@ export function CreateBoard({ setOpen }) {
         tasks: [],
       })),
     };
-    setData((prev) => [...prev, newBoard]);
-    setSelect(data.length);
+    setData([...data, newBoard]);
+    setSelect(data?.length);
     setOpen(false);
   };
   return (

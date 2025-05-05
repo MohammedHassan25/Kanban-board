@@ -36,13 +36,13 @@ export function Header() {
           items={{
             edit: {
               label: "Edit Board",
-              onClick: data.length > 0 ? onEditBoard : null,
-              isActive: data.length > 0,
+              onClick: data?.length > 0 ? onEditBoard : null,
+              isActive: data?.length > 0,
             },
             delete: {
               label: "Delete Board",
-              onClick: data.length > 0 ? onDeleteBoard : null,
-              isActive: data.length > 0,
+              onClick: data?.length > 0 ? onDeleteBoard : null,
+              isActive: data?.length > 0,
             },
           }}
           triggerComponent={() => (
