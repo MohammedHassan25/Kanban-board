@@ -1,6 +1,7 @@
 import { CustomDialog, CustomDropdownMenu } from "@/components";
+import { Context } from "@/ContextApp";
 import iconVerticalEllipsis from "@assets/icon-vertical-ellipsis.svg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 /**
  * @param {Object} props - The props object.
@@ -12,11 +13,15 @@ import { useState } from "react";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { data, setData, select, setSelect } = useContext(Context);
 
   const onEditBoard = () => setOpen(true);
   const onDeleteBoard = () => {
     if (window.confirm("Are you sure you want to delete this board?")) {
-      console.log("Board deleted");
+      const newData = [...data];
+      newData.splice(select, 1);
+      setData(newData);
+      setSelect(0);
     }
   };
 
@@ -31,11 +36,13 @@ export function Header() {
           items={{
             edit: {
               label: "Edit Board",
-              onClick: onEditBoard,
+              onClick: data.length > 0 ? onEditBoard : null,
+              isActive: data.length > 0,
             },
             delete: {
               label: "Delete Board",
-              onClick: onDeleteBoard,
+              onClick: data.length > 0 ? onDeleteBoard : null,
+              isActive: data.length > 0,
             },
           }}
           triggerComponent={() => (

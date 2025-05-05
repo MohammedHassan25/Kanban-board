@@ -1,7 +1,7 @@
 ### To Do
 
 - [x] Initialize the project
-- [ ] Create the project's components
+- [x] Create the project's components
   - [x] Colors tokens
   - [x] Typography (add font-family & font-sizes)
   <!-- We will use Radix headless components -->
@@ -9,7 +9,7 @@
   - [x] Text fields with all states
   - [x] Dropdowns
   - [x] Dialog
-- [ ] Create the project's layout
+- [x] Create the project's layout
   - [x] Header
   - [x] Sidebar
   - [x] Workspace
@@ -18,7 +18,7 @@
   - [x] Tasks
   - [x] Mock data and use it to render the boards
 - Project's functionality
-  - [ ] Add new board
+  - [x] Add new board
   - [ ] Delete board
   - [ ] Cache boards in local storage
   - [ ] Edit board

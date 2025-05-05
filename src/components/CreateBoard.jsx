@@ -23,7 +23,7 @@ export function CreateBoard({ setOpen }) {
     const boardName = formData.get("BoardName");
     const columnNames = formData.getAll("ColumnName").filter(Boolean);
     const newBoard = {
-      id: data.length + 1,
+      id: Date.now(),
       title: boardName,
       columns: columnNames.map((name, i) => ({
         id: i + 1,
