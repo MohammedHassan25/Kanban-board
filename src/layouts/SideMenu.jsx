@@ -52,7 +52,7 @@ export function SideMenu() {
             }
             description="You can create a new board here."
           >
-            <CreateBoard setOpen={setOpen} />
+            <CreateBoard setOpen={setOpen} Action="Create New Board"/>
           </CustomDialog>
         </li>
       </ul>

@@ -1,4 +1,4 @@
-import { CustomDialog, CustomDropdownMenu } from "@/components";
+import { CreateBoard, CustomDialog, CustomDropdownMenu } from "@/components";
 import { Context } from "@/ContextApp";
 import iconVerticalEllipsis from "@assets/icon-vertical-ellipsis.svg";
 import { useContext, useState } from "react";
@@ -15,7 +15,6 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const { data, setData, select, setSelect } = useContext(Context);
 
-  const onEditBoard = () => setOpen(true);
   const onDeleteBoard = () => {
     if (window.confirm("Are you sure you want to delete this board?")) {
       const newData = [...data];
@@ -36,7 +35,7 @@ export function Header() {
           items={{
             edit: {
               label: "Edit Board",
-              onClick: data?.length > 0 ? onEditBoard : null,
+              onClick: data?.length > 0 ? () => setOpen(true) : null,
               isActive: data?.length > 0,
             },
             delete: {
@@ -51,8 +50,13 @@ export function Header() {
             </button>
           )}
         />
-        <CustomDialog isOpen={open} setOpen={setOpen} title="Edit Board">
-          <div className="p-4">Edit Board Content</div>
+        <CustomDialog
+          isOpen={open}
+          setOpen={setOpen}
+          title="Edit Board"
+          description="Edit the board details here."
+        >
+          <CreateBoard Action="Edit Board" isOpen={open} setOpen={setOpen} />
         </CustomDialog>
       </div>
     </header>
