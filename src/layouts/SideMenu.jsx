@@ -1,4 +1,4 @@
-import { CreateBoard, CustomDialog } from "@/components";
+import { CreateAndEditBoard, CustomDialog } from "@/components";
 import clsx from "clsx";
 import { useContext, useState } from "react";
 import { Context } from "@/ContextApp";
@@ -52,7 +52,7 @@ export function SideMenu() {
             }
             description="You can create a new board here."
           >
-            <CreateBoard setOpen={setOpen} Action="Create New Board"/>
+            <CreateAndEditBoard setOpen={setOpen} Action="Create New Board"/>
           </CustomDialog>
         </li>
       </ul>

@@ -1,4 +1,4 @@
-import { CreateBoard, CustomDialog, CustomDropdownMenu } from "@/components";
+import { CreateAndEditBoard, CustomDialog, CustomDropdownMenu } from "@/components";
 import { Context } from "@/ContextApp";
 import iconVerticalEllipsis from "@assets/icon-vertical-ellipsis.svg";
 import { useContext, useState } from "react";
@@ -56,7 +56,7 @@ export function Header() {
           title="Edit Board"
           description="Edit the board details here."
         >
-          <CreateBoard Action="Edit Board" isOpen={open} setOpen={setOpen} />
+          <CreateAndEditBoard Action="Edit Board" isOpen={open} setOpen={setOpen} />
         </CustomDialog>
       </div>
     </header>
