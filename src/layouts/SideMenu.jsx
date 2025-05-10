@@ -1,4 +1,4 @@
-import { CreateAndEditBoard, CustomDialog } from "@/components";
+import {CreateAndEditBoard, CustomDialog } from "@/components";
 import clsx from "clsx";
 import { useContext, useState } from "react";
 import { Context } from "@/ContextApp";

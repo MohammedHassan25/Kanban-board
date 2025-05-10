@@ -11,7 +11,7 @@ import { useContext, useState } from "react";
  * @description The CreateBoard component renders a form to create a new board with columns.
  */
 
-export function CreateBoard({ setOpen, Action }) {
+export function CreateAndEditBoard({ setOpen, Action }) {
   const { data, setData, select, setSelect } = useContext(Context);
   const [addColumn, setAddColumns] = useState(
     data[select]?.columns && Action === "Edit Board"
@@ -40,9 +40,9 @@ export function CreateBoard({ setOpen, Action }) {
     switch (Action) {
       case "Edit Board": {
         const columns = columnNames.map((name, i) => ({
+          ...data[select]?.columns,
           id: i + 1,
           title: name,
-          tasks: [],
         }));
         setData((prev) =>
           prev.map((item, index) =>
