@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { Button, Card } from ".";
+import { Context } from "@/ContextApp";
 
 /**
  * @param {Object} props - The props object.
@@ -10,10 +12,37 @@ import { Button, Card } from ".";
 
 export function Column(props) {
   const { title, tasks } = props;
+  const { data, setData, select } = useContext(Context);
+
+  const handleAddNewTask = () => {
+    const newTask = {
+      id: Date.now(),
+      title: "New Task",
+      description: "Task description",
+    };
+
+    const newColumns = data[select].columns.map((column) => {
+      if (column.title !== title) return column;
+      return {
+        ...column,
+        tasks: [...(column.tasks || []), newTask],
+      };
+    });
+
+    setData((prev) => {
+      const newData = [...prev];
+      newData[select] = {
+        ...newData[select],
+        columns: newColumns,
+      };
+      return newData;
+    });
+  };
+
   return (
     <div className="flex w-72 shrink-0 flex-col self-start rounded-lg bg-lines-light px-2 shadow">
       <h2 className="group/column relative top-0 rounded bg-lines-light px-2 py-4 text-heading-s">
-        {title}
+        {title} ({tasks?.length})
       </h2>
       <div className="mb-5 flex flex-col gap-5">
         {tasks?.map((task, index) => (
@@ -24,7 +53,12 @@ export function Column(props) {
           />
         ))}
       </div>
-      <Button variant="buttonForAddTask" size="lg" isFullWidth={true}>
+      <Button
+        variant="buttonForAddTask"
+        size="lg"
+        isFullWidth={true}
+        onClick={handleAddNewTask}
+      >
         + Add New Task
       </Button>
     </div>
