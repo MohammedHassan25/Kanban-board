@@ -22,7 +22,7 @@
   - [x] Delete board
   - [x] Cache boards in local storage
   - [x] Edit board
-  - [ ] Add new task
+  - [x] Add new task
   - [ ] Delete task
   - [ ] Add new Column
   - [ ] Delete Column
