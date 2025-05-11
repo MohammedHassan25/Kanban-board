@@ -11,7 +11,7 @@ import { Context } from "@/ContextApp";
  */
 
 export function Column(props) {
-  const { title, tasks } = props;
+  const { id , title, tasks } = props;
   const { data, setData, select } = useContext(Context);
 
   const handleAddNewTask = () => {
@@ -22,7 +22,7 @@ export function Column(props) {
     };
 
     const newColumns = data[select].columns.map((column) => {
-      if (column.title !== title) return column;
+      if (column.id !== id) return column;
       return {
         ...column,
         tasks: [...(column.tasks || []), newTask],
