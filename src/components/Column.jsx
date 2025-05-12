@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Button, Card } from ".";
 import { Context } from "@/ContextApp";
 
@@ -11,18 +11,21 @@ import { Context } from "@/ContextApp";
  */
 
 export function Column(props) {
-  const { id , title, tasks } = props;
+  const { id: ColumnId, title, tasks } = props;
   const { data, setData, select } = useContext(Context);
+  const [newCardId, setNewCardId] = useState(
+    tasks?.length > 0 ? tasks[tasks.length - 1].id + 1 : 1,
+  );
 
   const handleAddNewTask = () => {
     const newTask = {
-      id: Date.now(),
+      id: newCardId,
       title: "New Task",
       description: "Task description",
     };
 
-    const newColumns = data[select].columns.map((column) => {
-      if (column.id !== id) return column;
+    const newColumns = data[select]?.columns?.map((column) => {
+      if (column.id !== ColumnId) return column;
       return {
         ...column,
         tasks: [...(column.tasks || []), newTask],
@@ -37,6 +40,7 @@ export function Column(props) {
       };
       return newData;
     });
+    setNewCardId((prevId) => prevId + 1);
   };
 
   return (
@@ -45,11 +49,13 @@ export function Column(props) {
         {title} ({tasks?.length})
       </h2>
       <div className="mb-5 flex flex-col gap-5">
-        {tasks?.map((task, index) => (
+        {tasks?.map((_, index) => (
           <Card
+            id={tasks[index].id}
             key={tasks[index].id}
             title={tasks[index].title}
             description={tasks[index].description}
+            columnId={ColumnId}
           />
         ))}
       </div>

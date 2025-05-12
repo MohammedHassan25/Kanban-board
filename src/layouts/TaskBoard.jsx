@@ -16,7 +16,7 @@ export function TaskBoard() {
 
   return (
     <main className="flex h-[calc(100vh-97px)] flex-1 gap-6 overflow-auto bg-light-grey p-6">
-      {board?.map((i, index) => (
+      {board?.map((_, index) => (
         <Column
           id={board[index]?.id}
           key={board[index]?.id}

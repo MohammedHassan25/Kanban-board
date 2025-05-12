@@ -39,10 +39,10 @@ export function CreateAndEditBoard({ setOpen, Action }) {
     const columnNames = formData.getAll("ColumnName").filter(Boolean);
     switch (Action) {
       case "Edit Board": {
-        const columns = columnNames.map((name, i) => ({
+        const columns = columnNames?.map((name, i) => ({
           id: i + 1,
           title: name,
-          tasks: data[select].columns[i]?.tasks || [],
+          tasks: data[select]?.columns[i]?.tasks || [],
         }));
         setData((prev) =>
           prev.map((item, index) =>

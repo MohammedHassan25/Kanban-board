@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { Context } from "@/ContextApp";
+
 /**
  * @param {Object} props - The properties passed to the component.
  * @param {string} props.title - The title of the card.
@@ -7,11 +10,48 @@
  */
 
 export function Card(props) {
-  const { title, description } = props;
+  const { columnId, id: CardId, title, description } = props;
+  const { setData, select } = useContext(Context);
+
+  console.log("CardId", CardId);
+
+  const handleDeleteTask = () => {
+    setData((prevData) => {
+      const newData = [...prevData];
+
+      const updatedColumns = newData[select].columns.map((column) => {
+        if (column.id === columnId) {
+          return {
+            ...column,
+            tasks: column.tasks.filter((task) => {
+              console.log(task.id)
+              return task.id !== CardId;
+            }),
+          };
+        }
+        return column;
+      });
+
+      newData[select] = {
+        ...newData[select],
+        columns: updatedColumns,
+      };
+
+      return newData;
+    });
+  };
+
   return (
     <div className="group/card relative min-h-16 overflow-y-hidden rounded-lg bg-white px-4 py-3 shadow-sm">
       <h2 className="text-heading-m">{title}</h2>
       <p>{description}</p>
+
+      <button
+        className="absolute bottom-0 right-0 top-0 bg-white p-2 text-body-m text-red opacity-0 shadow duration-300 focus:opacity-100 group-hover/card:opacity-100 peer-focus:opacity-100"
+        onClick={handleDeleteTask}
+      >
+        Delete
+      </button>
     </div>
   );
 }
