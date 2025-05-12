@@ -13,8 +13,6 @@ export function Card(props) {
   const { columnId, id: CardId, title, description } = props;
   const { setData, select } = useContext(Context);
 
-  console.log("CardId", CardId);
-
   const handleDeleteTask = () => {
     setData((prevData) => {
       const newData = [...prevData];
@@ -24,7 +22,6 @@ export function Card(props) {
           return {
             ...column,
             tasks: column.tasks.filter((task) => {
-              console.log(task.id)
               return task.id !== CardId;
             }),
           };
