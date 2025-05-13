@@ -11,8 +11,25 @@ import { useContext } from "react";
  */
 
 export function TaskBoard() {
-  const { data, select } = useContext(Context);
+  const { data, select, setData } = useContext(Context);
   const board = data && data[select]?.columns;
+
+  const handleAddColumn = () => {
+    const newColumn = {
+      id: data[select].columns.length > 0 ? data[select].columns.length + 1 : 1,
+      title: `New Column`,
+      tasks: [],
+    };
+
+    setData((prevData) => {
+      const newData =[...prevData];
+      newData[select] = {
+        ...newData[select],
+        columns: [...newData[select].columns, newColumn],
+      }
+      return newData;
+    });
+  };
 
   return (
     <main className="flex h-[calc(100vh-97px)] flex-1 gap-6 overflow-auto bg-light-grey p-6">
@@ -24,7 +41,9 @@ export function TaskBoard() {
           tasks={board[index]?.tasks}
         />
       ))}
-      <Button variant="buttonForAddColumn">+ New Column</Button>
+      <Button variant="buttonForAddColumn" onClick={handleAddColumn}>
+        + New Column
+      </Button>
     </main>
   );
 }
