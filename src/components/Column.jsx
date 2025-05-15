@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Button, Card } from ".";
 import { Context } from "@/ContextApp";
+import { produce } from "immer";
 
 /**
  * @param {Object} props - The props object.
@@ -32,14 +33,11 @@ export function Column(props) {
       };
     });
 
-    setData((prev) => {
-      const newData = [...prev];
-      newData[select] = {
-        ...newData[select],
-        columns: newColumns,
-      };
-      return newData;
-    });
+    setData((prev) =>
+      produce(prev, (draft) => {
+        draft[select].columns = newColumns;
+      }),
+    );
     setNewCardId((prevId) => prevId + 1);
   };
 

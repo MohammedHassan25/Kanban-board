@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Context } from "@/ContextApp";
+import { produce } from "immer";
 
 /**
  * @param {Object} props - The properties passed to the component.
@@ -29,12 +30,9 @@ export function Card(props) {
         return column;
       });
 
-      newData[select] = {
-        ...newData[select],
-        columns: updatedColumns,
-      };
-
-      return newData;
+      return produce(newData, (draft) => {
+        draft[select].columns = updatedColumns;
+      });
     });
   };
 

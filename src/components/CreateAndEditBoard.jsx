@@ -44,6 +44,7 @@ export function CreateAndEditBoard({ setOpen, Action }) {
           title: name,
           tasks: data[select]?.columns[i]?.tasks || [],
         }));
+
         setData((prev) =>
           prev.map((item, index) =>
             index === select

@@ -5,6 +5,7 @@ import {
 } from "@/components";
 import { Context } from "@/ContextApp";
 import iconVerticalEllipsis from "@assets/icon-vertical-ellipsis.svg";
+import { produce } from "immer";
 import { useContext, useState } from "react";
 
 /**
@@ -21,9 +22,11 @@ export function Header() {
 
   const onDeleteBoard = () => {
     if (window.confirm("Are you sure you want to delete this board?")) {
-      const newData = [...data];
-      newData.splice(select, 1);
-      setData(newData);
+      setData(
+        produce(data, (draft) => {
+          draft.splice(select, 1);
+        }),
+      );
       setSelect(0);
     }
   };

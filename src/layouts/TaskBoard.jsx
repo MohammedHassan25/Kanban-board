@@ -1,5 +1,6 @@
 import { Button, Column } from "@/components";
 import { Context } from "@/ContextApp";
+import { produce } from "immer";
 import { useContext } from "react";
 
 /**
@@ -21,14 +22,11 @@ export function TaskBoard() {
       tasks: [],
     };
 
-    setData((prevData) => {
-      const newData =[...prevData];
-      newData[select] = {
-        ...newData[select],
-        columns: [...newData[select].columns, newColumn],
-      }
-      return newData;
-    });
+    setData((prevData) =>
+      produce(prevData, (draft) => {
+        draft[select].columns.push(newColumn);
+      }),
+    );
   };
 
   return (
