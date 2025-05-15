@@ -15,25 +15,19 @@ export function Card(props) {
   const { setData, select } = useContext(Context);
 
   const handleDeleteTask = () => {
-    setData((prevData) => {
-      const newData = [...prevData];
-
-      const updatedColumns = newData[select].columns.map((column) => {
-        if (column.id === columnId) {
-          return {
-            ...column,
-            tasks: column.tasks.filter((task) => {
-              return task.id !== CardId;
-            }),
-          };
-        }
-        return column;
-      });
-
-      return produce(newData, (draft) => {
-        draft[select].columns = updatedColumns;
-      });
-    });
+    setData((prevData) =>
+      produce(prevData, (draft) => {
+        draft[select].columns = draft[select].columns.map((column) => {
+          if (column.id === columnId) {
+            return {
+              ...column,
+              tasks: column.tasks.filter((task) => task.id !== CardId),
+            };
+          }
+          return column;
+        });
+      }),
+    );
   };
 
   return (
