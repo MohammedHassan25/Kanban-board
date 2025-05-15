@@ -39,7 +39,7 @@ export function TaskBoard() {
           tasks={board[index]?.tasks}
         />
       ))}
-      <Button variant="buttonForAddColumn" onClick={handleAddColumn} isDisabled={data.length === 0}>
+      <Button variant="buttonForAddColumn" onClick={handleAddColumn} isDisabled={data?.length === 0}>
         + New Column
       </Button>
     </main>
