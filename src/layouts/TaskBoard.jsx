@@ -17,7 +17,7 @@ export function TaskBoard() {
 
   const handleAddColumn = () => {
     const newColumn = {
-      id: data[select].columns.length > 0 ? data[select].columns.length + 1 : 1,
+      id: Date.now(),
       title: `New Column`,
       tasks: [],
     };

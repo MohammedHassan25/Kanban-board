@@ -41,10 +41,28 @@ export function Column(props) {
     setNewCardId((prevId) => prevId + 1);
   };
 
+  const handleDeleteColumn = () => {
+    if (window.confirm(`Are you sure you want to delete this "${title}"?`)) {
+      setData((prev) =>
+        produce(prev, (draft) => {
+          draft[select].columns = draft[select]?.columns?.filter(
+            (column) => column.id !== ColumnId,
+          );
+        }),
+      );
+    }
+  };
+
   return (
     <div className="flex w-72 shrink-0 flex-col self-start rounded-lg bg-lines-light px-2 shadow">
       <h2 className="group/column relative top-0 rounded bg-lines-light px-2 py-4 text-heading-s">
         {title} ({tasks?.length})
+        <button
+          className="absolute bottom-0 right-0 top-0 p-2 text-body-m text-red opacity-0 duration-300 focus:opacity-100 group-hover/column:opacity-100"
+          onClick={handleDeleteColumn}
+        >
+          Delete
+        </button>
       </h2>
       <div className="mb-5 flex flex-col gap-5">
         {tasks?.map((_, index) => (
