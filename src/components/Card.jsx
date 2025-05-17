@@ -1,18 +1,51 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "@/ContextApp";
 import { produce } from "immer";
 
-/**
- * @param {Object} props - The properties passed to the component.
- * @param {string} props.title - The title of the card.
- * @param {string} props.description - The description of the card.
- * @returns {JSX.Element} The Card component.
- * @description The Card component renders a card with a title and description.
- */
-
-export function Card(props) {
-  const { columnId, id: CardId, title, description } = props;
+export function Card({ columnId, id: CardId, title, description }) {
   const { setData, select } = useContext(Context);
+  const [isEditing, setIsEditing] = useState(false);
+  const [draftTitle, setDraftTitle] = useState(title);
+  const [draftDescription, setDraftDescription] = useState(description);
+
+  const containerRef = useRef(null);
+
+  const cancelEditing = () => {
+    setIsEditing(false);
+    setDraftTitle(title);
+    setDraftDescription(description);
+  };
+
+  const saveEditing = () => {
+    setIsEditing(false);
+    setData((prevData) =>
+      produce(prevData, (draft) => {
+        const col = draft[select].columns.find((c) => c.id === columnId);
+        if (!col) return;
+        const task = col.tasks.find((t) => t.id === CardId);
+        if (!task) return;
+        task.title = draftTitle;
+        task.description = draftDescription;
+      }),
+    );
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        isEditing &&
+        containerRef.current &&
+        !containerRef.current.contains(e.target)
+      ) {
+        if (draftTitle === title && draftDescription === description)
+          cancelEditing();
+        else saveEditing();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditing, draftTitle, draftDescription]);
 
   const handleDeleteTask = () => {
     setData((prevData) =>
@@ -32,11 +65,44 @@ export function Card(props) {
 
   return (
     <div className="group/card relative min-h-16 overflow-y-hidden rounded-lg bg-white px-4 py-3 shadow-sm">
-      <h2 className="text-heading-m">{title}</h2>
-      <p>{description}</p>
+      {isEditing ? (
+        <div
+          ref={containerRef}
+          tabIndex={-1}
+          className="flex flex-col space-y-2"
+        >
+          <textarea
+            className="border p-2 text-heading-m"
+            value={draftTitle}
+            onKeyDown={(e) => e.key === "Escape" && cancelEditing()}
+            onChange={(e) => setDraftTitle(e.target.value)}
+          />
+          <textarea
+            className="border p-2 pl-2"
+            value={draftDescription}
+            onKeyDown={(e) => e.key === "Escape" && cancelEditing()}
+            onChange={(e) => setDraftDescription(e.target.value)}
+          />
+        </div>
+      ) : (
+        <div onClick={() => setIsEditing(true)} className="cursor-text">
+          <h2
+            className="text-heading-m"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                setIsEditing(true);
+              }
+            }}
+          >
+            {title}
+          </h2>
+          <p>{description}</p>
+        </div>
+      )}
 
       <button
-        className="absolute bottom-0 right-0 top-0 bg-white p-2 text-body-m text-red opacity-0 shadow duration-300 focus:opacity-100 group-hover/card:opacity-100 peer-focus:opacity-100"
+        className="absolute bottom-0 right-0 top-0 bg-white p-2 text-body-m text-red opacity-0 shadow duration-300 group-hover/card:opacity-100"
         onClick={handleDeleteTask}
       >
         Delete
