@@ -12,8 +12,6 @@ export function Card({ columnId, id: CardId, title, description }) {
 
   const cancelEditing = () => {
     setIsEditing(false);
-    setDraftTitle(title);
-    setDraftDescription(description);
   };
 
   const saveEditing = () => {
@@ -70,18 +68,30 @@ export function Card({ columnId, id: CardId, title, description }) {
           ref={containerRef}
           tabIndex={-1}
           className="flex flex-col space-y-2"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              if (draftTitle === title && draftDescription === description)
+                cancelEditing();
+              else saveEditing();
+            }
+          }}
         >
           <textarea
             className="border p-2 text-heading-m"
             value={draftTitle}
             onKeyDown={(e) => e.key === "Escape" && cancelEditing()}
             onChange={(e) => setDraftTitle(e.target.value)}
+            onFocus={(e) => e.target.select()}
+            autoFocus
           />
           <textarea
             className="border p-2 pl-2"
             value={draftDescription}
             onKeyDown={(e) => e.key === "Escape" && cancelEditing()}
             onChange={(e) => setDraftDescription(e.target.value)}
+            onFocus={(e) => e.target.select()}
+            autoFocus
           />
         </div>
       ) : (
