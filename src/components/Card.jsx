@@ -1,12 +1,22 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "@/ContextApp";
 import { produce } from "immer";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 export function Card({ columnId, id: CardId, title, description }) {
   const { setData, select } = useContext(Context);
   const [isEditing, setIsEditing] = useState(false);
   const [draftTitle, setDraftTitle] = useState(title);
   const [draftDescription, setDraftDescription] = useState(description);
+  const {
+    attributes,
+    listeners,
+    setActivatorNodeRef,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({ id: CardId, data: { columnId }, disabled: isEditing });
 
   const containerRef = useRef(null);
 
@@ -62,7 +72,16 @@ export function Card({ columnId, id: CardId, title, description }) {
   };
 
   return (
-    <div className="group/card relative min-h-16 overflow-y-hidden rounded-lg bg-white px-4 py-3 shadow-sm">
+    <div
+      className="group/card relative min-h-16 overflow-y-hidden rounded-lg bg-white px-4 py-3 shadow-sm"
+      ref={setNodeRef}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+      }}
+      {...attributes}
+      {...listeners}
+    >
       {isEditing ? (
         <div
           ref={containerRef}
@@ -95,7 +114,7 @@ export function Card({ columnId, id: CardId, title, description }) {
           />
         </div>
       ) : (
-        <div onClick={() => setIsEditing(true)} className="cursor-text">
+        <div ref={setActivatorNodeRef} onClick={() => setIsEditing(true)} className="cursor-text">
           <h2
             className="text-heading-m"
             onKeyDown={(e) => {

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Button, Card } from ".";
 import { Context } from "@/ContextApp";
 import { produce } from "immer";
@@ -14,13 +14,10 @@ import { produce } from "immer";
 export function Column(props) {
   const { id: ColumnId, title, tasks } = props;
   const { data, setData, select } = useContext(Context);
-  const [newCardId, setNewCardId] = useState(
-    tasks?.length > 0 ? tasks[tasks.length - 1].id + 1 : 1,
-  );
 
   const handleAddNewTask = () => {
     const newTask = {
-      id: newCardId,
+      id: Date.now(),
       title: "New Task",
       description: "Task description",
     };
@@ -38,7 +35,6 @@ export function Column(props) {
         draft[select].columns = newColumns;
       }),
     );
-    setNewCardId((prevId) => prevId + 1);
   };
 
   const handleDeleteColumn = () => {
