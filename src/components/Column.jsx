@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { Button, Card } from ".";
 import { Context } from "@/ContextApp";
 import { produce } from "immer";
+import { useDroppable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
 
 /**
  * @param {Object} props - The props object.
@@ -14,6 +16,11 @@ import { produce } from "immer";
 export function Column(props) {
   const { id: ColumnId, title, tasks } = props;
   const { data, setData, select } = useContext(Context);
+  const { setNodeRef } =
+    useDroppable({
+      id: ColumnId,
+      data: { type: "column" },
+    });
 
   const handleAddNewTask = () => {
     const newTask = {
@@ -50,7 +57,10 @@ export function Column(props) {
   };
 
   return (
-    <div className="flex w-72 shrink-0 flex-col self-start rounded-lg bg-lines-light px-2 shadow">
+    <div
+      ref={tasks.length === 0 ? setNodeRef : null}
+      className="flex w-72 shrink-0 flex-col self-start rounded-lg bg-lines-light px-2 shadow"
+    >
       <h2 className="group/column relative top-0 rounded bg-lines-light px-2 py-4 text-heading-s">
         {title} ({tasks?.length})
         <button
@@ -60,13 +70,13 @@ export function Column(props) {
           Delete
         </button>
       </h2>
-      <div className="mb-5 flex flex-col gap-5">
+      <div className="mb-5 flex flex-col gap-5 transition-all duration-200 ease-in-out">
         {tasks?.map((_, index) => (
           <Card
-            id={tasks[index].id}
-            key={tasks[index].id}
-            title={tasks[index].title}
-            description={tasks[index].description}
+            id={tasks[index]?.id}
+            key={tasks[index]?.id}
+            title={tasks[index]?.title}
+            description={tasks[index]?.description}
             columnId={ColumnId}
           />
         ))}

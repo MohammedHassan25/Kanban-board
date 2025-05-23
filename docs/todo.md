@@ -27,4 +27,4 @@
   - [x] Add new Column
   - [x] Delete Column
   - [x] Edit task
-  - [ ] Drag and drop tasks
+  - [x] Drag and drop tasks

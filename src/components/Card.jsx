@@ -12,11 +12,10 @@ export function Card({ columnId, id: CardId, title, description }) {
   const {
     attributes,
     listeners,
-    setActivatorNodeRef,
     setNodeRef,
     transform,
     transition,
-  } = useSortable({ id: CardId, data: { columnId }, disabled: isEditing });
+  } = useSortable({ id: CardId, data: { type: "card" , columnId }, disabled: isEditing });
 
   const containerRef = useRef(null);
 
@@ -114,7 +113,10 @@ export function Card({ columnId, id: CardId, title, description }) {
           />
         </div>
       ) : (
-        <div ref={setActivatorNodeRef} onClick={() => setIsEditing(true)} className="cursor-text">
+        <div
+          onClick={() => setIsEditing(true)}
+          className="cursor-text"
+        >
           <h2
             className="text-heading-m"
             onKeyDown={(e) => {

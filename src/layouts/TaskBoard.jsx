@@ -9,6 +9,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import {
+  arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
@@ -28,33 +29,107 @@ export function TaskBoard() {
   const { data, select, setData } = useContext(Context);
   const board = data && data[select]?.columns;
   const sensors = useSensors(
-  useSensor(PointerSensor, {
-    activationConstraint: {
-      distance: 10,
-    },
-  }),
-  useSensor(KeyboardSensor, {
-    coordinateGetter: sortableKeyboardCoordinates,
-    activationConstraint: { distance: 10 },
-  })
-);
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+      activationConstraint: { distance: 10 },
+    }),
+  );
 
   const taskIds = useMemo(() => {
     let taskIds = [];
     if (!board || board.length === 0) return taskIds;
     for (let column of board) {
       if (column?.tasks?.length > 0) {
-        taskIds = [...taskIds, ...column.tasks.map((task) => task.id)];
+        taskIds = [...taskIds, ...column.tasks.map((task) => task?.id)];
       }
     }
     return taskIds;
   }, [board]);
 
-  console.log({taskIds});
+  const handleDragEnd = (e) => {
+    const { active, over } = e;
+    if (!over || active.id === over.id) return;
+    setData((prev) =>
+      produce(prev, (draft) => {
+        if (over.data.current.type === "card") {
+          if (over.data.current.type === "column") return;
+          const columns = draft[select].columns;
 
-  const handleDragEnd = (event) => {
-    console.log({event});
-  }
+          const activeColIndex = columns.findIndex((col) =>
+            col.tasks.some((t) => t.id === active.id),
+          );
+          const overColIndex = columns.findIndex((col) =>
+            col.tasks.some((t) => t.id === over.id),
+          );
+
+          const oldIndex = columns[activeColIndex]?.tasks?.findIndex(
+            (t) => t.id === active.id,
+          );
+          const newIndex = columns[overColIndex]?.tasks?.findIndex(
+            (t) => t.id === over.id,
+          );
+
+          if (activeColIndex === overColIndex) {
+            columns[activeColIndex].tasks = arrayMove(
+              columns[activeColIndex]?.tasks,
+              oldIndex,
+              newIndex,
+            );
+          }
+        }
+      }),
+    );
+  };
+
+  const handleDragOver = (e) => {
+    const { active, over } = e;
+    if (!over || active.id === over.id) return;
+
+    setData((prev) =>
+      produce(prev, (draft) => {
+        const columns = draft[select].columns;
+        const activeColIndex = columns.findIndex((col) =>
+          col.tasks.some((t) => t.id === active.id),
+        );
+        if (over.data.current.type === "card") {
+          if (over.data.current.type === "column") return;
+          const overColIndex = columns.findIndex((col) =>
+            col.tasks.some((t) => t.id === over.id),
+          );
+
+          const oldIndex = columns[activeColIndex]?.tasks?.findIndex(
+            (t) => t.id === active.id,
+          );
+
+          const newIndex = columns[overColIndex]?.tasks?.findIndex(
+            (t) => t.id === over.id,
+          );
+
+          if (activeColIndex !== overColIndex) {
+            const activeTask = columns[activeColIndex]?.tasks[oldIndex];
+            columns[activeColIndex]?.tasks?.splice(oldIndex, 1);
+            columns[overColIndex]?.tasks?.splice(newIndex, 0, activeTask);
+          }
+        } else if (over.data.current.type === "column") {
+          if (over.data.current.type === "card") return;
+          const oldIndex = columns[activeColIndex]?.tasks?.findIndex(
+            (t) => t.id === active.id,
+          );
+          const newColIndex = columns.findIndex((c) => c.id === over.id);
+          const activeTask = columns[activeColIndex].tasks.splice(
+            oldIndex,
+            1,
+          )[0];
+          columns[newColIndex].tasks.push(activeTask);
+        }
+      }),
+    );
+  };
 
   const handleAddColumn = () => {
     const newColumn = {
@@ -72,11 +147,13 @@ export function TaskBoard() {
 
   return (
     <main className="flex h-[calc(100vh-97px)] flex-1 gap-6 overflow-auto bg-light-grey p-6">
-      <DndContext onDragEnd={handleDragEnd} sensors={sensors} collisionDetection={closestCenter}>
-        <SortableContext
-          items={taskIds}
-          strategy={verticalListSortingStrategy}
-        >
+      <DndContext
+        onDragEnd={handleDragEnd}
+        onDragOver={handleDragOver}
+        sensors={sensors}
+        collisionDetection={closestCenter}
+      >
+        <SortableContext items={taskIds} strategy={verticalListSortingStrategy}>
           {board?.map((_, index) => (
             <Column
               id={board[index]?.id}
